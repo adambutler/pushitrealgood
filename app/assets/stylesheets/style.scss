@@ -1,0 +1,87 @@
+$white: #fff;
+
+html {
+  min-height: 100%;
+}
+
+body {
+  text-align: center;
+
+  background-color: #9a27df;
+  /* IE9, iOS 3.2+ */
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIHN0b3AtY29sb3I9IiM3MDQ5ZWEiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2MzMDVkNCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%,color-stop(0, rgb(112, 73, 234)),color-stop(1, rgb(195, 5, 212)));
+  /* Android 2.3 */
+  background-image: -webkit-linear-gradient(top left,rgb(112, 73, 234) 0%,rgb(195, 5, 212) 100%);
+  /* IE10+ */
+  background-image: linear-gradient(to bottom right,rgb(112, 73, 234) 0%,rgb(195, 5, 212) 100%);
+  background-image: -ms-linear-gradient(top left,rgb(112, 73, 234) 0%,rgb(195, 5, 212) 100%);
+
+  color: $white;
+}
+
+*, input {
+  font-weight: 100;
+  font-family: 'Lato', sans-serif;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+input[type=text] {
+  text-align: center;
+  width: 50%;
+  min-width: 300px;
+  display: block;
+  margin: 20px auto;
+  height: 30px;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 1.5em;
+}
+
+label {
+  font-size: 2em;
+}
+
+.button {
+  -webkit-appearance: none;
+  padding: 20px 40px;
+  display: inline-block;
+  font-size: 1.5em;
+  background: rgba(0,0,0, 0.4);
+  color: $white;
+  border: none;
+  border-radius: 100px;
+  margin: 20px 0;
+  outline: none;
+  cursor: pointer;
+
+  &.small {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+}
+
+pre {
+  border-radius: 4px;
+  overflow: hidden;;
+  background: rgba(0,0,0, 0.5);
+  padding: 10px;
+  width: 90%;
+  max-width: 880px;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: left;
+}
+
+code {
+  font-family: monospace;
+  padding: 20px;
+}

@@ -41,5 +41,22 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
+gem 'houston'
+gem 'pusher'
+
+# ActiveModel::Serializer implementation and Rails hooks
+gem 'active_model_serializers', github: 'rails-api/active_model_serializers', branch: 'master'
+
+# HAML for RoR
+gem 'haml-rails', '~> 0.8'
+
+# Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup.
+gem 'simple_form'
+
+# FriendlyId is the “Swiss Army bulldozer” of slugging and permalink plugins for ActiveRecord
+gem 'friendly_id', '~> 5.1.0'

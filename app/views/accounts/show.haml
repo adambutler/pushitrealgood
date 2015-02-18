@@ -1,0 +1,91 @@
+%h2
+  Shweeet!
+  %br
+  %small
+    Now lets build something awesome!
+
+%h3 Add this to your iOS app
+
+%pre
+  %code
+    :plain
+      // My API (POST http://pushitrealgood.dev/accounts/1/devices)
+
+      NSURL* URL = [NSURL URLWithString:@"http://pushitrealgood.dev/accounts/#{@account.id}/devices"];
+      NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+      request.HTTPMethod = @"POST";
+
+      // Form URL-Encoded Body
+
+      NSDictionary* bodyParameters = @{
+        @"device[token]": @"red",
+      };
+      request.HTTPBody = [NSStringFromQueryParameters(bodyParameters) dataUsingEncoding:NSUTF8StringEncoding];
+
+      // Connection
+
+      NSURLConnection* connection = [NSURLConnection connectionWithRequest:request delegate:nil];
+      [connection start];
+
+      /*
+       * Utils: Add this section before your class implementation
+       */
+
+      /**
+       This creates a new query parameters string from the given NSDictionary. For
+       example, if the input is @{@"day":@"Tuesday", @"month":@"January"}, the output
+       string will be @"day=Tuesday&month=January".
+       @param queryParameters The input dictionary.
+       @return The created parameters string.
+      */
+      static NSString* NSStringFromQueryParameters(NSDictionary* queryParameters)
+      {
+          NSMutableArray* parts = [NSMutableArray array];
+          [queryParameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+              NSString *part = [NSString stringWithFormat: @"%@=%@",
+                  [key stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
+                  [value stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]
+              ];
+              [parts addObject:part];
+          }];
+          return [parts componentsJoinedByString: @"&"];
+      }
+
+      /**
+       Creates a new URL by adding the given query parameters.
+       @param URL The input URL.
+       @param queryParameters The query parameter dictionary to add.
+       @return A new NSURL.
+      */
+      static NSURL* NSURLByAppendingQueryParameters(NSURL* URL, NSDictionary* queryParameters)
+      {
+          NSString* URLString = [NSString stringWithFormat:@"%@?%@",
+              [URL absoluteString],
+              NSStringFromQueryParameters(queryParameters),
+          ];
+          return [NSURL URLWithString:URLString];
+      }
+
+%h3 Push it like this!
+
+%pre
+  %code.json
+    :plain
+      {
+        "channel": "apn",
+        "event": "message",
+        "data": { "message": "Awesome push bro!", device: "abc123" }
+      }
+
+%h3 ...or push to everybody
+
+%pre
+  %code.json
+    :plain
+      {
+        "channel": "apn",
+        "event": "message",
+        "data": { "message": "Awesome push bro!" }
+      }
+
+%h3 Have fun. Built at the Simpleweb Pusher hack night.

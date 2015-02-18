@@ -1,0 +1,10 @@
+%h2 Add your account
+
+= simple_form_for @account do |f|
+  = f.input :key, label: "Pusher Key"
+  = f.input :secret, label: "Pusher Secret"
+  = f.input :certificate, as: :file, input_html: { style: "display: block; margin: 0 auto; display: none;" }, label: "APN Certificate"
+  %label.button.small{ for: "account_certificate", }
+    Browse
+  %br
+  = f.button :submit
