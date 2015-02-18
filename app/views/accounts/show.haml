@@ -4,66 +4,92 @@
   %small
     Now lets build something awesome!
 
-%h3 Add this to your iOS app
+%h3
+  Add this to your iOS app in the
+  %code AppDelegate.m
+  file just under
+  %code @interface AppDelegate ()
 
 %pre
-  %code
+  %code.objectivec
     :plain
-      // My API (POST http://pushitrealgood.dev/accounts/1/devices)
+      @property NSData *deviceToken;
+      @property NSMutableData *responseData;
 
-      NSURL* URL = [NSURL URLWithString:@"http://pushitrealgood.dev/accounts/#{@account.id}/devices"];
-      NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
-      request.HTTPMethod = @"POST";
+%h3
+  In the
+  %code didFinishLaunchingWithOptions
+  method add this -
 
-      // Form URL-Encoded Body
+%pre
+  %code.objectivec
+    :plain
+      UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+      UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+      [application registerUserNotificationSettings:settings];
 
-      NSDictionary* bodyParameters = @{
-        @"device[token]": @"red",
-      };
-      request.HTTPBody = [NSStringFromQueryParameters(bodyParameters) dataUsingEncoding:NSUTF8StringEncoding];
+      [application registerForRemoteNotifications];
 
-      // Connection
+%h3 Finally add these methods to the same file
 
-      NSURLConnection* connection = [NSURLConnection connectionWithRequest:request delegate:nil];
-      [connection start];
-
-      /*
-       * Utils: Add this section before your class implementation
-       */
-
-      /**
-       This creates a new query parameters string from the given NSDictionary. For
-       example, if the input is @{@"day":@"Tuesday", @"month":@"January"}, the output
-       string will be @"day=Tuesday&month=January".
-       @param queryParameters The input dictionary.
-       @return The created parameters string.
-      */
-      static NSString* NSStringFromQueryParameters(NSDictionary* queryParameters)
-      {
-          NSMutableArray* parts = [NSMutableArray array];
-          [queryParameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-              NSString *part = [NSString stringWithFormat: @"%@=%@",
-                  [key stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
-                  [value stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]
-              ];
-              [parts addObject:part];
-          }];
-          return [parts componentsJoinedByString: @"&"];
+%pre
+  %code.objectivec
+    :plain
+      - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+          NSLog(@"Registered with token: %@", deviceToken);
+          self.deviceToken = deviceToken;
+          [self postDeviceToken];
       }
 
-      /**
-       Creates a new URL by adding the given query parameters.
-       @param URL The input URL.
-       @param queryParameters The query parameter dictionary to add.
-       @return A new NSURL.
-      */
-      static NSURL* NSURLByAppendingQueryParameters(NSURL* URL, NSDictionary* queryParameters)
-      {
-          NSString* URLString = [NSString stringWithFormat:@"%@?%@",
-              [URL absoluteString],
-              NSStringFromQueryParameters(queryParameters),
-          ];
-          return [NSURL URLWithString:URLString];
+      - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+          NSLog(@"Error: %@", error);
+      }
+
+      - (void)postDeviceToken {
+          NSLog(@"Hello");
+          NSURL *url = [NSURL URLWithString:@"http://#{request.host}/accounts/#{@account.id}/devices"];
+          NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+          request.HTTPMethod = @"POST";
+          NSString *key = @"device[token]";
+          NSString *value = [NSString stringWithFormat:@"%@", self.deviceToken];
+          NSString *body = [NSString stringWithFormat:@"%@=%@", [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+          request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+          NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+          [connection start];
+      }
+
+      - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+          // A response has been received, this is where we initialize the instance var you created
+          // so that we can append data to it in the didReceiveData method
+          // Furthermore, this method is called each time there is a redirect so reinitializing it
+          // also serves to clear it
+          NSLog(@"Recieving reponse");
+          _responseData = [[NSMutableData alloc] init];
+      }
+
+      - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+          // Append the new data to the instance variable you declared
+          [_responseData appendData:data];
+      }
+
+      - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                        willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+          // Return nil to indicate not necessary to store a cached response for this connection
+          return nil;
+      }
+
+      - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+          // The request is complete and data has been received
+          // You can parse the stuff in your instance variable now
+          NSLog(@"Finish loading");
+          NSString *string = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
+          NSLog(@"Response: %@", string);
+      }
+
+      - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+          // The request has failed for some reason!
+          // Check the error var
+          NSLog(@"Failed");
       }
 
 %h3 Push it like this!
@@ -87,5 +113,3 @@
         "event": "message",
         "data": { "message": "Awesome push bro!" }
       }
-
-%h3 Have fun. Built at the Simpleweb Pusher hack night.
