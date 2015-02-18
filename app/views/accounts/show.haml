@@ -12,7 +12,7 @@
 
 %pre
   %code.objectivec
-    :plain
+    :preserve
       @property NSData *deviceToken;
       @property NSMutableData *responseData;
 
@@ -23,7 +23,7 @@
 
 %pre
   %code.objectivec
-    :plain
+    :preserve
       UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
       UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
       [application registerUserNotificationSettings:settings];
@@ -34,7 +34,7 @@
 
 %pre
   %code.objectivec
-    :plain
+    :preserve
       - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
           NSLog(@"Registered with token: %@", deviceToken);
           self.deviceToken = deviceToken;
@@ -96,7 +96,7 @@
 
 %pre
   %code.json
-    :plain
+    :preserve
       {
         "channel": "apn",
         "event": "message",
@@ -107,7 +107,7 @@
 
 %pre
   %code.json
-    :plain
+    :preserve
       {
         "channel": "apn",
         "event": "message",
