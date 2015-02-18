@@ -1,4 +1,5 @@
 $white: #fff;
+$purple: #9a27df;
 
 html {
   min-height: 100%;
@@ -7,7 +8,7 @@ html {
 body {
   text-align: center;
 
-  background-color: #9a27df;
+  background-color: $purple;
   /* IE9, iOS 3.2+ */
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIHN0b3AtY29sb3I9IiM3MDQ5ZWEiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2MzMDVkNCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
   background-image: -webkit-gradient(linear, 0% 0%, 100% 100%,color-stop(0, rgb(112, 73, 234)),color-stop(1, rgb(195, 5, 212)));
@@ -27,10 +28,23 @@ body {
 
 h1 {
   font-size: 4em;
+  a {
+    font-weight: 100;
+  }
 }
 
 h2 {
-  font-size: 2.5em;
+  font-size: 3em;
+}
+
+h3 {
+  font-size: 2em;
+}
+
+a {
+  color: lighten($purple, 30%);
+  text-decoration: none;
+  font-weight: normal;
 }
 
 input[type=text] {
@@ -74,14 +88,24 @@ pre {
   overflow: hidden;;
   background: rgba(0,0,0, 0.5);
   padding: 10px;
-  width: 90%;
-  max-width: 880px;
   margin: 0 auto;
-  overflow: auto;
   text-align: left;
+  width: 90%;
 }
 
-code {
+pre code {
+  overflow: auto;
+  max-height: 500px;
+}
+
+code, code * {
   font-family: monospace;
+}
+
+pre code {
   padding: 20px;
+}
+
+pre code {
+  font-size: 1.5em;
 }
