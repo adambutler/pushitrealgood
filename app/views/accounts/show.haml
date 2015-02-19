@@ -4,6 +4,24 @@
   %small
     Now lets build something awesome!
 
+%h3 Your devices
+
+%table
+  - if @account.devices.empty?
+    %tbody
+      %tr
+        %td You do not have any devices yet
+  - else
+    %thead
+      %th Created at
+      %th Token
+    %tbody
+      - @account.devices.reverse.each do |device|
+        %tr
+          %td= timeago_tag device.created_at
+          %td
+            %code= device.token
+
 %h3
   Add this to your iOS app in the
   %code AppDelegate.m

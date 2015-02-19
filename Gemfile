@@ -60,3 +60,5 @@ gem 'simple_form'
 
 # FriendlyId is the “Swiss Army bulldozer” of slugging and permalink plugins for ActiveRecord
 gem 'friendly_id', '~> 5.1.0'
+
+gem 'rails-timeago', '~> 2.0'
