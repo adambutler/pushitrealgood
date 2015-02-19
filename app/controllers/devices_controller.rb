@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
   end
 
   def set_account
-    @account = Account.find(params[:account_id])
+    @account = Account.friendly.find_by_uid!(params[:account_id])
   end
 
 end

@@ -47,7 +47,7 @@
 
       - (void)postDeviceToken {
           NSLog(@"Hello");
-          NSURL *url = [NSURL URLWithString:@"http://#{request.host}/accounts/#{@account.id}/devices"];
+          NSURL *url = [NSURL URLWithString:@"http://#{request.host}/accounts/#{@account.uid}/devices"];
           NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
           request.HTTPMethod = @"POST";
           NSString *key = @"device[token]";

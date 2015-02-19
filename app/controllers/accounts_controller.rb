@@ -41,7 +41,6 @@ class AccountsController < ApplicationController
   end
 
   def set_account
-    id = params[:account_id] || params[:id]
-    @account = Account.find(id)
+    @account = Account.friendly.find_by_uid!(params[:id])
   end
 end
