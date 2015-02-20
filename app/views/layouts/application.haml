@@ -11,6 +11,9 @@
     :javascript
       hljs.initHighlightingOnLoad();
   %body
+    %p.notice= notice
+    %p.alert= alert
+
     %h1
       = link_to "Push for Pusher", root_path
     = yield
