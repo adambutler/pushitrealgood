@@ -7,7 +7,7 @@
 %h3 Your devices
 
 %table
-  - if @account.devices.empty?
+  - if @app.devices.empty?
     %tbody
       %tr
         %td You do not have any devices yet
@@ -16,7 +16,7 @@
       %th Created at
       %th Token
     %tbody
-      - @account.devices.reverse.each do |device|
+      - @app.devices.reverse.each do |device|
         %tr
           %td= timeago_tag device.created_at
           %td
@@ -65,7 +65,7 @@
 
       - (void)postDeviceToken {
           NSLog(@"Hello");
-          NSURL *url = [NSURL URLWithString:@"http://#{request.host}/accounts/#{@account.uid}/devices"];
+          NSURL *url = [NSURL URLWithString:@"http://#{request.host}/accounts/#{@app.uid}/devices"];
           NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
           request.HTTPMethod = @"POST";
           NSString *key = @"device[token]";

@@ -1,10 +1,10 @@
 class DevicesController < ApplicationController
 
-  before_filter :set_account, only: :create
+  before_filter :set_app, only: :create
 
   def create
     @device = Device.new(device_params)
-    @device.account = @account
+    @device.app = @app
     if @device.save
       render json: @device
     end
@@ -16,8 +16,8 @@ class DevicesController < ApplicationController
     params.require(:device).permit(:token)
   end
 
-  def set_account
-    @account = Account.friendly.find_by_uid!(params[:account_id])
+  def set_app
+    @app = App.friendly.find_by_uid!(params[:app_id])
   end
 
 end

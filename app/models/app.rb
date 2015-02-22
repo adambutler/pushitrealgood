@@ -1,4 +1,4 @@
-class Account < ActiveRecord::Base
+class App < ActiveRecord::Base
   extend FriendlyId
   friendly_id :uid
 
@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
   def generate_uid
     self.uid = loop do
       random_uid = SecureRandom.urlsafe_base64(nil, false)
-      break random_uid unless Account.exists?(uid: random_uid)
+      break random_uid unless App.exists?(uid: random_uid)
     end
   end
 end

@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :accounts do
+  resources :apps do
     resources :devices
     post "relay"
   end
 
-  root "accounts#new"
+  root "apps#new"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

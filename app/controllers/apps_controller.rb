@@ -1,18 +1,19 @@
 require 'houston'
 APN = Houston::Client.development
 
-class AccountsController < ApplicationController
+class AppsController < ApplicationController
   before_action :authenticate_user!
-  before_filter :set_account, only: [:show, :relay]
+  before_filter :set_app, only: [:show, :relay]
 
   def new
-    @account = Account.new
+    @app = App.new
   end
 
   def create
-    @account = Account.new(account_params)
-    if @account.save
-      redirect_to account_path(@account)
+    @app = App.new(app_params)
+    @app.apn_certificate = params[:app][:apn_certificate].read
+    if @app.save
+      redirect_to app_path(@app)
     end
   end
 
@@ -21,7 +22,7 @@ class AccountsController < ApplicationController
     @json = JSON.parse(@body)
     @message = @json["message"]
 
-    @account.devices.each do |device|
+    @app.devices.each do |device|
       APN.certificate = File.read("/Users/adambutler/Sites/pushitrealgood/public/cert.pem")
       notification = Houston::Notification.new(device: device.token)
       notification.alert = @message
@@ -37,11 +38,11 @@ class AccountsController < ApplicationController
 
   private
 
-  def account_params
-    params.require(:account).permit(:key, :secret)
+  def app_params
+    params.require(:app).permit(:key, :secret)
   end
 
-  def set_account
-    @account = Account.friendly.find_by_uid!(params[:id])
+  def set_app
+    @app = App.friendly.find_by_uid!(params[:id])
   end
 end
