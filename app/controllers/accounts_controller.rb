@@ -2,6 +2,7 @@ require 'houston'
 APN = Houston::Client.development
 
 class AccountsController < ApplicationController
+  before_action :authenticate_user!
   before_filter :set_account, only: [:show, :relay]
 
   def new
