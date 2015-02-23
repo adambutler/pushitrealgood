@@ -17,6 +17,6 @@ class App < ActiveRecord::Base
   end
 
   def listen_for_events
-    Subscribe.perform_async(key, uid)
+    Subscribe.perform_async(id, key, uid)
   end
 end

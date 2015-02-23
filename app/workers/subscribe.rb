@@ -3,10 +3,10 @@ require 'json'
 class Subscribe
   include Sidekiq::Worker
 
-  def perform(key, account_uid)
+  def perform(id, key, account_uid)
     puts 'Subscribe'
     puts key
-    puts account_uid
+    # puts account_uid
 
     options = { secure: true }
     socket = PusherClient::Socket.new(key, options)
@@ -14,21 +14,28 @@ class Subscribe
     socket.subscribe('apn')
 
     socket['apn'].bind('message') do |data|
-      puts data
-    end
-      # @body = request.body.string
-      # @json = JSON.parse(@body)
-      # @message = @json["message"]
+      @json = JSON.parse(data)
+      @message = @json["message"]
 
-      # @app.devices.each do |device|
-      #   Rails.logger.debug device.token
-      #   APN.certificate = File.read("/Users/adambutler/Sites/pushitrealgood/public/cert.pem")
-      #   notification = Houston::Notification.new(device: device.token)
-      #   notification.alert = @message
-      #   notification.badge = @json["badge"].to_i unless @json["badge"].nil?
-      #   notification.sound = "alert.aiff"
-      #   APN.push(notification)
-      # end
+      App.find(id).devices.each do |device|
+        puts """
+SENDING MESSAGE TO DEVICE
+=========================
+  token: #{device.token}
+  message: #{@message}
+"""
+        # APN.certificate = File.read("/Users/adambutler/Sites/pushitrealgood/public/cert.pem")
+        # notification = Houston::Notification.new(device: device.token)
+        # notification.alert = @message
+        # notification.badge = @json["badge"].to_i unless @json["badge"].nil?
+        # notification.sound = "alert.aiff"
+        # APN.push(notification)
+      end
+    end
+
+    socket.connect
+
+
 
       # begin
       # uri = URI('http://pushitrealgood.dev/accounts/#{account_uid}/relay')
