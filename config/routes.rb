@@ -1,9 +1,13 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :users
   resources :apps do
     resources :devices
     post "relay"
   end
+
+  mount Sidekiq::Web, at: '/sidekiq'
 
   root "apps#new"
 

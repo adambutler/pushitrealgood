@@ -17,25 +17,6 @@ class AppsController < ApplicationController
     end
   end
 
-  def relay
-    @body = request.body.string
-    @json = JSON.parse(@body)
-    @message = @json["message"]
-
-    @app.devices.each do |device|
-      APN.certificate = File.read("/Users/adambutler/Sites/pushitrealgood/public/cert.pem")
-      notification = Houston::Notification.new(device: device.token)
-      notification.alert = @message
-      notification.badge = @json["badge"].to_i unless @json["badge"].nil?
-
-      notification.sound = "alert.aiff"
-
-      APN.push(notification)
-    end
-
-    render nothing: true, status: 200
-  end
-
   private
 
   def app_params
