@@ -6,7 +6,6 @@ class Subscribe
   def perform(id, key, account_uid)
     puts 'Subscribe'
     puts key
-    # puts account_uid
 
     options = { secure: true }
     socket = PusherClient::Socket.new(key, options)
@@ -16,14 +15,20 @@ class Subscribe
     socket['apn'].bind('message') do |data|
       @json = JSON.parse(data)
       @message = @json["message"]
+      @app = App.find(id)
 
-      App.find(id).devices.each do |device|
+      @app.devices.each do |device|
         puts """
 SENDING MESSAGE TO DEVICE
 =========================
   token: #{device.token}
   message: #{@message}
+  certificate: #{@app.apn_certificate}
 """
+        APN.certificate = File.read(@app.apn_certificate)
+        notification = Houston::Notification.new(device: device.token)
+        notification.alert = @message
+        APN.push(notification)
       end
     end
 

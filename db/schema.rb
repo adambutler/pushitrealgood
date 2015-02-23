@@ -14,13 +14,13 @@
 ActiveRecord::Schema.define(version: 20150222192609) do
 
   create_table "apps", force: :cascade do |t|
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "key",             limit: 255
     t.string   "secret",          limit: 255
     t.string   "uid",             limit: 255
     t.integer  "user_id",         limit: 4
-    t.text     "apn_certificate", limit: 65535
+    t.string   "apn_certificate", limit: 255
   end
 
   create_table "devices", force: :cascade do |t|
