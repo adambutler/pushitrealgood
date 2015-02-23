@@ -48,6 +48,7 @@ end
 
 gem 'houston'
 gem 'pusher'
+gem 'pusher-client'
 
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers', github: 'rails-api/active_model_serializers', branch: 'master'
@@ -64,3 +65,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'rails-timeago', '~> 2.0'
 
 gem 'devise'
+
+gem 'sinatra', require: false
+gem 'sidekiq'
+gem 'carrierwave'
