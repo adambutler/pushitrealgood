@@ -2,6 +2,8 @@ class App < ActiveRecord::Base
   extend FriendlyId
   friendly_id :uid
 
+  mount_uploader :apn_certificate, CertificateUploader
+
   has_many :devices
 
   before_create :generate_uid, on: :create

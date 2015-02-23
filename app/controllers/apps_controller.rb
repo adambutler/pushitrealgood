@@ -11,7 +11,6 @@ class AppsController < ApplicationController
 
   def create
     @app = App.new(app_params)
-    @app.apn_certificate = params[:app][:apn_certificate].read
     if @app.save
       redirect_to app_path(@app)
     end
@@ -20,7 +19,7 @@ class AppsController < ApplicationController
   private
 
   def app_params
-    params.require(:app).permit(:key, :secret)
+    params.require(:app).permit(:key, :secret, :apn_certificate)
   end
 
   def set_app
