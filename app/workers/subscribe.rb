@@ -17,7 +17,13 @@ class Subscribe
       @message = @json["message"]
       @app = App.find(id)
 
-      @app.devices.each do |device|
+      if @json["device"].nil?
+        @devices = @app.devices
+      else
+        @devices = @app.devices.where(token: @json["device"])
+      end
+
+      @devices.each do |device|
         puts """
 SENDING MESSAGE TO DEVICE
 =========================
