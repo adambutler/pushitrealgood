@@ -2,6 +2,8 @@ class App < ActiveRecord::Base
   extend FriendlyId
   friendly_id :uid
 
+  validates_uniqueness_of :key, :secret
+
   mount_uploader :apn_certificate, CertificateUploader
 
   has_many :devices
