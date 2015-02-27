@@ -46,6 +46,12 @@ group :development, :test do
   gem 'binding_of_caller'
 end
 
+group :production do
+  gem "rails_12factor"
+  gem "thin", "~> 1.6.1"
+  gem "pg"
+end
+
 gem 'houston'
 gem 'pusher'
 gem 'pusher-client'
