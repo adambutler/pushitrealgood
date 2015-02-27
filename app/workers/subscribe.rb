@@ -31,7 +31,7 @@ SENDING MESSAGE TO DEVICE
   message: #{@message}
   certificate: #{@app.apn_certificate}
 """
-        APN.certificate = App.last.apn_certificate.read
+        APN.certificate = @app.apn_certificate.read
         notification = Houston::Notification.new(device: device.token)
         notification.alert = @message
         APN.push(notification)
