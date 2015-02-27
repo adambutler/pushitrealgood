@@ -1,4 +1,4 @@
-![screen shot 2015-02-18 at 12 21 27](https://cloud.githubusercontent.com/assets/1238468/6247336/43404182-b76b-11e4-9719-b266e7a18464.png)
+![_pushforpusher](https://cloud.githubusercontent.com/assets/1238468/6403257/ed2561a0-be05-11e4-9978-f01a41fa50f8.gif)
 
 > Build at the Simpleweb Pusher hacknight. Non hacky version coming soon - All keys, secrets and certificates have been revoked, get a [pusher account here](http://pusher.com) to play :)
 
