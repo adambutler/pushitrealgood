@@ -2,7 +2,7 @@
 
 = simple_form_for @app do |f|
   = f.input :key, label: "Pusher Key"
-  = f.input :secret, label: "Pusher Secret"
+  = f.input :secret, label: "Pusher Secret", as: :password
   = f.input :apn_certificate, as: :file, input_html: { style: "display: block; margin: 0 auto; display: none;" }, label: "APN Certificate"
   %label.button.small{ for: "app_apn_certificate", }
     Browse
