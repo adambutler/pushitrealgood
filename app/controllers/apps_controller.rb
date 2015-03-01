@@ -4,6 +4,7 @@ APN = Houston::Client.development
 class AppsController < ApplicationController
   before_action :authenticate_user!
   before_filter :set_app, only: [:show, :relay]
+  before_filter :set_apps, only: [:index]
 
   def new
     @app = App.new
@@ -25,5 +26,9 @@ class AppsController < ApplicationController
 
   def set_app
     @app = current_user.apps.friendly.find_by_uid!(params[:id])
+  end
+
+  def set_apps
+    @apps = current_user.apps
   end
 end

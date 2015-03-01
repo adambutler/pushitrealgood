@@ -1,0 +1,16 @@
+%h3 Your Apps
+
+%table
+  - if @apps.empty?
+    %tbody
+      %tr
+        %td You do not have any apps yet
+  - else
+    %thead
+      %th Key
+      %th Secret
+    %tbody
+      - @apps.each do |app|
+        %tr
+          %td= link_to app.key, app_path(app.id)
+          %td= link_to app.secret, app_path(app.id)
