@@ -7,6 +7,7 @@ class App < ActiveRecord::Base
   mount_uploader :apn_certificate, CertificateUploader
 
   has_many :devices
+  belongs_to :user
 
   before_create :generate_uid, on: :create
   after_create :listen_for_events, on: :create
