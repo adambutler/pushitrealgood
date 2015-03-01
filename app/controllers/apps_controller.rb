@@ -23,6 +23,6 @@ class AppsController < ApplicationController
   end
 
   def set_app
-    @app = App.friendly.find_by_uid!(params[:id])
+    @app = current_user.apps.friendly.find_by_uid!(params[:id])
   end
 end
